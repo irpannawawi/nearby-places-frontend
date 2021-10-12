@@ -20,29 +20,28 @@
     </style>
     <script>
     	let map;
-    	var pos = {};
-    	navigator.geolocation.getCurrentPosition(position => {
-    		pos.lat = position.coords.latitude
-    		pos.lng = position.coords.longitude
-    	})
-    	let rajadesa = pos
-    	console.log(pos)
+    	var pos = [];
+	    	navigator.geolocation.getCurrentPosition(position => {
+	    		pos = { lat: position.coords.latitude, lng: position.coords.longitude }
+	    	})
+    		console.log(pos)
+
     	function initMap() {
     		map = new google.maps.Map(document.getElementById("map"), {
-    			center: rajadesa,
+    			center: pos,
     			zoom: 15,
     			mapId: '93574349857cf182'
     		});
-  // The marker, positioned at Uluru
-  const image =
-    "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
-  const marker = new google.maps.Marker({
-  	position: rajadesa,
-  	map: map,
-  	title: "Rajadesa",
-  	icon: image
-  });
-}
+			  // The marker, positioned at Uluru
+			  const image =
+			    "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+			  const marker = new google.maps.Marker({
+			  	position: pos,
+			  	map: map,
+			  	title: "Rajadesa",
+			  	icon: image
+			  });
+			}
 </script>
 </head>
 <body>
