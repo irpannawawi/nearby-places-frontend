@@ -15,6 +15,7 @@
        
   <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"
             type="text/javascript" charset="utf-8"></script>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" type="text/css"
             href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
 
@@ -33,6 +34,7 @@
 		
 	}*/
 	async function createMap(pos){
+		const getTempat = await axios.get(`https://api-nearby-app.herokuapp.com/search?latitude=${pos[0]}&longitude=${pos[1]}&kategori=9`)
 		console.log(pos)
 		const centerLocation = {lat: pos[0], lng: pos[1]}
 		console.log({msg: centerLocation})
@@ -44,10 +46,15 @@
 		      zoom: 15,
 		      center: centerLocation
 		    });
-		var marker = new H.map.Marker(centerLocation);
-		map.addObject(marker)
-		var marker2 = new H.map.Marker({lat: pos[0]+0.002, lng: pos[1]+0.0002});
-		map.addObject(marker2)
+		// add marker
+		// get data
+		const tempat = getTempat.data.data
+		
+		for(let i =0; i < tempat.length; i++){
+			var marker = new H.map.Marker({lat: tempat[i].latitude, lng: tempat[i].longitude});
+			map.addObject(marker)
+		}
+
 		var mapEvents = await new H.mapevents.MapEvents(map);
 		var behavior = new H.mapevents.Behavior(mapEvents);
 		var ui = H.ui.UI.createDefault(map, defaultLayers);
